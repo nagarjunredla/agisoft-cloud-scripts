@@ -41,7 +41,7 @@ sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
 
 # Prepare for NVidia drivers install
-sudo apt-get install -y gcc make pkg-config xserver-xorg-dev linux-headers-$(uname -r) xterm xinit
+sudo apt-get install -y gcc make pkg-config xserver-xorg-dev linux-headers-$(uname -r) xterm xinit libegl1-mesa
 # xterm is needed for xinit
 
 if [ "$ubuntu_codename" = "bionic" ] ; then
@@ -51,7 +51,7 @@ if [ "$ubuntu_codename" = "bionic" ] ; then
 fi
 
 # Install Lubuntu/Xubuntu/anything
-sudo apt-get install -y lightdm lubuntu-desktop
+sudo DEBIAN_FRONTEND=noninteractive apt-get install lightdm lubuntu-desktop python2 -y
 
 if $AMD_GPU; then
     # Installing AMD driver, see https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-amd-driver.html (but we don't install 32-bit support)
