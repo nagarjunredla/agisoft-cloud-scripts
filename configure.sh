@@ -22,7 +22,7 @@ elif lspci | egrep -q -h "Tesla A10G|Device 2237"; then
 elif lspci | egrep -q -h "Tesla T4|Device 1eb8"; then
     # EC2 g4
     NVIDIA_GPU=true
-    NVIDIA_DRIVER=450.51.06
+    NVIDIA_DRIVER=460.106.00
     NVIDIA_DRIVER_URL=http://us.download.nvidia.com/tesla/${NVIDIA_DRIVER}/NVIDIA-Linux-x86_64-${NVIDIA_DRIVER}.run
 elif [ "$ubuntu_codename" = "bionic" ] ; then
     # Ubuntu 18.04
@@ -51,12 +51,12 @@ if [ "$ubuntu_codename" = "bionic" ] ; then
 fi
 
 # Install Lubuntu/Xubuntu/anything
-sudo apt-get install -y lubuntu-desktop
+sudo apt-get install -y lightdm lubuntu-desktop
 
 if $AMD_GPU; then
     # Installing AMD driver, see https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-amd-driver.html (but we don't install 32-bit support)
 
-    sudo apt install -y awscli
+    sudo apt install -y awscli python2
     aws s3 cp --recursive s3://ec2-amd-linux-drivers/latest/ . --no-sign-request
 
     tar -xf amdgpu-pro*ubuntu*.xz
@@ -71,7 +71,7 @@ if $AMD_GPU; then
     rm -rf `ls | grep 'amdgpu.*'`
 
     # Install VirtualGL
-    wget https://sourceforge.net/projects/virtualgl/files/2.5.2/virtualgl_2.5.2_amd64.deb/download -O virtualgl_2.5.2_amd64.deb
+    wget https://sourceforge.net/projects/virtualgl/files/3.0.2/virtualgl_3.0.2_amd64.deb/download -O virtualgl_3.0.2_amd64.deb
     sudo dpkg -i virtualgl*.deb
     rm virtualgl*.deb
 
@@ -142,12 +142,12 @@ else
     sudo /usr/bin/python2.7 fix_xorg_conf.py /etc/X11/xorg.conf
 
     # Install VirtualGL
-    wget https://sourceforge.net/projects/virtualgl/files/2.5.2/virtualgl_2.5.2_amd64.deb/download -O virtualgl_2.5.2_amd64.deb
+    wget https://sourceforge.net/projects/virtualgl/files/3.0.2/virtualgl_3.0.2_amd64.deb/download -O virtualgl_3.0.2_amd64.deb
     sudo dpkg -i virtualgl*.deb
     rm virtualgl*.deb
 
     # Install TurboVNC
-    wget https://sourceforge.net/projects/turbovnc/files/2.1.1/turbovnc_2.1.1_amd64.deb/download -O turbovnc_2.1.1_amd64.deb
+    wget https://sourceforge.net/projects/turbovnc/files/3.0.2/turbovnc_3.0.2_amd64.deb/download -O turbovnc_3.0.2_amd64.deb
     sudo dpkg -i turbovnc*.deb
     rm turbovnc*.deb
 
